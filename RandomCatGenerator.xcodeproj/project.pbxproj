@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		722C496E298A43C9003F3F09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C496D298A43C9003F3F09 /* AppDelegate.swift */; };
 		722C4970298A43C9003F3F09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C496F298A43C9003F3F09 /* SceneDelegate.swift */; };
-		722C4972298A43C9003F3F09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C4971298A43C9003F3F09 /* ViewController.swift */; };
-		722C4975298A43C9003F3F09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 722C4973298A43C9003F3F09 /* Main.storyboard */; };
+		722C4972298A43C9003F3F09 /* RandomCatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C4971298A43C9003F3F09 /* RandomCatViewController.swift */; };
 		722C4977298A43CA003F3F09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 722C4976298A43CA003F3F09 /* Assets.xcassets */; };
 		722C497A298A43CA003F3F09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 722C4978298A43CA003F3F09 /* LaunchScreen.storyboard */; };
 		722C4982298A440A003F3F09 /* TheCatAPIInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 722C4981298A440A003F3F09 /* TheCatAPIInfo.plist */; };
+		722C498B298A4615003F3F09 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C498A298A4615003F3F09 /* Constants.swift */; };
+		91021187D43AA3798FDCDD91 /* Pods_RandomCatGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FD1D4FD995B3F3FB1EC86E1 /* Pods-RandomCatGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomCatGenerator.release.xcconfig"; path = "Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator.release.xcconfig"; sourceTree = "<group>"; };
 		722C496A298A43C9003F3F09 /* RandomCatGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomCatGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		722C496D298A43C9003F3F09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		722C496F298A43C9003F3F09 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		722C4971298A43C9003F3F09 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		722C4974298A43C9003F3F09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		722C4971298A43C9003F3F09 /* RandomCatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCatViewController.swift; sourceTree = "<group>"; };
 		722C4976298A43CA003F3F09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		722C4979298A43CA003F3F09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		722C497B298A43CA003F3F09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		722C4981298A440A003F3F09 /* TheCatAPIInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TheCatAPIInfo.plist; sourceTree = "<group>"; };
+		722C498A298A4615003F3F09 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A426390906EF326CB90F74F2 /* Pods-RandomCatGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomCatGenerator.debug.xcconfig"; path = "Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator.debug.xcconfig"; sourceTree = "<group>"; };
+		F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RandomCatGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91021187D43AA3798FDCDD91 /* Pods_RandomCatGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5BAF1EC34821351993611E6F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		722C4961298A43C9003F3F09 = {
 			isa = PBXGroup;
 			children = (
 				722C496C298A43C9003F3F09 /* RandomCatGenerator */,
 				722C496B298A43C9003F3F09 /* Products */,
+				C51D77F6D8AD6DC557D07718 /* Pods */,
+				5BAF1EC34821351993611E6F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,16 +73,74 @@
 		722C496C298A43C9003F3F09 /* RandomCatGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				722C496D298A43C9003F3F09 /* AppDelegate.swift */,
-				722C496F298A43C9003F3F09 /* SceneDelegate.swift */,
-				722C4971298A43C9003F3F09 /* ViewController.swift */,
-				722C4973298A43C9003F3F09 /* Main.storyboard */,
-				722C4976298A43CA003F3F09 /* Assets.xcassets */,
-				722C4978298A43CA003F3F09 /* LaunchScreen.storyboard */,
+				722C4983298A45DD003F3F09 /* Network */,
+				722C4986298A45E8003F3F09 /* Models */,
+				722C4987298A45EC003F3F09 /* Views */,
+				722C4985298A45E5003F3F09 /* Controllers */,
+				722C4989298A45F3003F3F09 /* Utils */,
+				722C4988298A45EF003F3F09 /* Commons */,
 				722C497B298A43CA003F3F09 /* Info.plist */,
 				722C4981298A440A003F3F09 /* TheCatAPIInfo.plist */,
 			);
 			path = RandomCatGenerator;
+			sourceTree = "<group>";
+		};
+		722C4983298A45DD003F3F09 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		722C4985298A45E5003F3F09 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				722C4971298A43C9003F3F09 /* RandomCatViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		722C4986298A45E8003F3F09 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		722C4987298A45EC003F3F09 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		722C4988298A45EF003F3F09 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				722C496D298A43C9003F3F09 /* AppDelegate.swift */,
+				722C496F298A43C9003F3F09 /* SceneDelegate.swift */,
+				722C4976298A43CA003F3F09 /* Assets.xcassets */,
+				722C4978298A43CA003F3F09 /* LaunchScreen.storyboard */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		722C4989298A45F3003F3F09 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				722C498A298A4615003F3F09 /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		C51D77F6D8AD6DC557D07718 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A426390906EF326CB90F74F2 /* Pods-RandomCatGenerator.debug.xcconfig */,
+				0FD1D4FD995B3F3FB1EC86E1 /* Pods-RandomCatGenerator.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +150,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 722C497E298A43CA003F3F09 /* Build configuration list for PBXNativeTarget "RandomCatGenerator" */;
 			buildPhases = (
+				35B64B280D977ACE50A06E61 /* [CP] Check Pods Manifest.lock */,
 				722C4966298A43C9003F3F09 /* Sources */,
 				722C4967298A43C9003F3F09 /* Frameworks */,
 				722C4968298A43C9003F3F09 /* Resources */,
+				7B41235804F79D25C20718CD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,34 +206,68 @@
 				722C4982298A440A003F3F09 /* TheCatAPIInfo.plist in Resources */,
 				722C497A298A43CA003F3F09 /* LaunchScreen.storyboard in Resources */,
 				722C4977298A43CA003F3F09 /* Assets.xcassets in Resources */,
-				722C4975298A43C9003F3F09 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35B64B280D977ACE50A06E61 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RandomCatGenerator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B41235804F79D25C20718CD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		722C4966298A43C9003F3F09 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				722C4972298A43C9003F3F09 /* ViewController.swift in Sources */,
+				722C4972298A43C9003F3F09 /* RandomCatViewController.swift in Sources */,
 				722C496E298A43C9003F3F09 /* AppDelegate.swift in Sources */,
 				722C4970298A43C9003F3F09 /* SceneDelegate.swift in Sources */,
+				722C498B298A4615003F3F09 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		722C4973298A43C9003F3F09 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				722C4974298A43C9003F3F09 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		722C4978298A43CA003F3F09 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -286,6 +395,7 @@
 		};
 		722C497F298A43CA003F3F09 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A426390906EF326CB90F74F2 /* Pods-RandomCatGenerator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -296,9 +406,9 @@
 				INFOPLIST_FILE = RandomCatGenerator/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -314,6 +424,7 @@
 		};
 		722C4980298A43CA003F3F09 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FD1D4FD995B3F3FB1EC86E1 /* Pods-RandomCatGenerator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -324,9 +435,9 @@
 				INFOPLIST_FILE = RandomCatGenerator/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
