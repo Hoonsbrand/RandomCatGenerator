@@ -11,7 +11,7 @@ struct BreedListService {
     static let shared = BreedListService()
     
     // breed 데이터 Fetching
-    func fetchCityList(completion: @escaping (BreedList) -> Void) {
+    func fetchBreedList(completion: @escaping (BreedList) -> Void) {
         guard let path = Bundle.main.path(forResource: "breeds", ofType: "json") else { return }
         
         guard let jsonString = try? String(contentsOfFile: path) else { return }

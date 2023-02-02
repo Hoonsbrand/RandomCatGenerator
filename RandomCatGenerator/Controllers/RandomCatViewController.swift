@@ -7,8 +7,8 @@
 
 import UIKit
 import SnapKit
-import Alamofire
 import Lottie
+import Kingfisher
 
 final class RandomCatViewController: UIViewController {
 
@@ -112,8 +112,9 @@ extension RandomCatViewController {
         AlamofireManager.shared.getRandomCat() { result in
             do {
                 let res = try JSONDecoder().decode([Cat].self, from: result)
-                print("DEBUG: 고양이 사진 url : \(res[0].url ?? "url 없음")")
-                self.loadCatImage(res[0].url)
+                guard let url = res[0].url else { return }
+                print("DEBUG: 고양이 사진 url : \(url)")
+                self.loadCatImage(url)
             } catch {
                 print("DEBUG: \(error)")
             }
@@ -121,18 +122,15 @@ extension RandomCatViewController {
     }
     
     // 고양이 사진을 ImageView에 넣는 메서드
-    private func loadCatImage(_ url: String?) {
-        let downloadQueue = DispatchQueue(__label: url, attr: nil)
+    private func loadCatImage(_ urlString: String) {
+        let downloadQueue = DispatchQueue(__label: urlString, attr: nil)
         downloadQueue.async() {
-            let data = NSData(contentsOf: NSURL(string: url!)! as URL)
-            var image: UIImage?
-            
-            guard data != nil else { return }
-            image = UIImage(data: data! as Data)
-            
+            let url = URL(string: urlString)
+
             DispatchQueue.main.async {
-                self.catImageView.image = image
-                LoadingView.shared.hide()
+                self.catImageView.kf.setImage(with: url) { _ in
+                    LoadingView.shared.hide()
+                }
             }
         }
     }

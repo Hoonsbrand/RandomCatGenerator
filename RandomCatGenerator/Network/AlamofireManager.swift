@@ -7,12 +7,16 @@
 
 import Foundation
 import Alamofire
+import Kingfisher
 
 struct AlamofireManager {
     static let shared = AlamofireManager()
     
     let apiKey = API.CLIENT_ID
-    private let baseURL: String = "https://api.thecatapi.com"
+    private let baseURL = "https://api.thecatapi.com"
+    let searchUrl = "/v1/images/search"
+    
+    let breedBaseURL = "https://cdn2.thecatapi.com/images/"
     
     private init() {}
     
@@ -24,10 +28,8 @@ struct AlamofireManager {
     }()
     
     func getRandomCat(completion: @escaping(_ result: Data) -> Void) {
-        let url = "/v1/images/search"
-        
         AlamofireManager.sessionManager
-            .request(baseURL + url, method: .get)
+            .request(baseURL + searchUrl, method: .get)
             .validate(statusCode: 200..<300)
             .responseString { response in
                 switch response.result {
@@ -40,6 +42,13 @@ struct AlamofireManager {
                     break
                 }
             }
+    }
+    
+    func getBreedURL(imageId: String, completion: @escaping(URL) -> Void) {
+        let urlString = breedBaseURL + "\(imageId).jpg"
+        guard let url = URL(string: urlString) else { return }
+        
+        completion(url)
     }
     
 }

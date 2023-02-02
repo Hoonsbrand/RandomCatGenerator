@@ -25,6 +25,7 @@
 		72E4A9AA298B9FC200B990D4 /* BreedListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4A9A9298B9FC200B990D4 /* BreedListController.swift */; };
 		72E4A9AC298BB68400B990D4 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4A9AB298BB68400B990D4 /* Protocols.swift */; };
 		72E4A9AE298BB6A200B990D4 /* BreedListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4A9AD298BB6A200B990D4 /* BreedListCell.swift */; };
+		72E4A9B1298BCC4000B990D4 /* BreedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4A9B0298BCC4000B990D4 /* BreedListViewModel.swift */; };
 		91021187D43AA3798FDCDD91 /* Pods_RandomCatGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		72E4A9A9298B9FC200B990D4 /* BreedListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedListController.swift; sourceTree = "<group>"; };
 		72E4A9AB298BB68400B990D4 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		72E4A9AD298BB6A200B990D4 /* BreedListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedListCell.swift; sourceTree = "<group>"; };
+		72E4A9B0298BCC4000B990D4 /* BreedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedListViewModel.swift; sourceTree = "<group>"; };
 		A426390906EF326CB90F74F2 /* Pods-RandomCatGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomCatGenerator.debug.xcconfig"; path = "Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator.debug.xcconfig"; sourceTree = "<group>"; };
 		F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RandomCatGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -95,6 +97,7 @@
 		722C496C298A43C9003F3F09 /* RandomCatGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				72E4A9AF298BCC3600B990D4 /* ViewModels */,
 				728DA4EE298B904200E989B9 /* Data */,
 				728DA4ED298B901100E989B9 /* Lotties */,
 				722C4983298A45DD003F3F09 /* Network */,
@@ -180,6 +183,14 @@
 				728DA4EF298B906500E989B9 /* breeds.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		72E4A9AF298BCC3600B990D4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				72E4A9B0298BCC4000B990D4 /* BreedListViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		C51D77F6D8AD6DC557D07718 /* Pods */ = {
@@ -315,6 +326,7 @@
 				72E4A9AC298BB68400B990D4 /* Protocols.swift in Sources */,
 				72E4A9A8298B9E9A00B990D4 /* BreedListService.swift in Sources */,
 				722C498F298A4E4E003F3F09 /* Cat.swift in Sources */,
+				72E4A9B1298BCC4000B990D4 /* BreedListViewModel.swift in Sources */,
 				722C4970298A43C9003F3F09 /* SceneDelegate.swift in Sources */,
 				728DA4F3298B9A3B00E989B9 /* Breed.swift in Sources */,
 				72E4A9AE298BB6A200B990D4 /* BreedListCell.swift in Sources */,
