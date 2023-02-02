@@ -16,6 +16,8 @@
 		722C498B298A4615003F3F09 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C498A298A4615003F3F09 /* Constants.swift */; };
 		722C498D298A47B2003F3F09 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C498C298A47B2003F3F09 /* AlamofireManager.swift */; };
 		722C498F298A4E4E003F3F09 /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C498E298A4E4E003F3F09 /* Cat.swift */; };
+		722C4991298AA221003F3F09 /* cat_loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 722C4990298AA221003F3F09 /* cat_loading.json */; };
+		722C4993298AA63A003F3F09 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722C4992298AA63A003F3F09 /* LoadingView.swift */; };
 		91021187D43AA3798FDCDD91 /* Pods_RandomCatGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +34,8 @@
 		722C498A298A4615003F3F09 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		722C498C298A47B2003F3F09 /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		722C498E298A4E4E003F3F09 /* Cat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
+		722C4990298AA221003F3F09 /* cat_loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cat_loading.json; sourceTree = "<group>"; };
+		722C4992298AA63A003F3F09 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A426390906EF326CB90F74F2 /* Pods-RandomCatGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomCatGenerator.debug.xcconfig"; path = "Target Support Files/Pods-RandomCatGenerator/Pods-RandomCatGenerator.debug.xcconfig"; sourceTree = "<group>"; };
 		F7E0F5D32EC6A7E6F7B8D9FA /* Pods_RandomCatGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RandomCatGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -77,6 +81,7 @@
 		722C496C298A43C9003F3F09 /* RandomCatGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				722C4990298AA221003F3F09 /* cat_loading.json */,
 				722C4983298A45DD003F3F09 /* Network */,
 				722C4986298A45E8003F3F09 /* Models */,
 				722C4987298A45EC003F3F09 /* Views */,
@@ -116,6 +121,7 @@
 		722C4987298A45EC003F3F09 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				722C4992298AA63A003F3F09 /* LoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +217,7 @@
 				722C4982298A440A003F3F09 /* TheCatAPIInfo.plist in Resources */,
 				722C497A298A43CA003F3F09 /* LaunchScreen.storyboard in Resources */,
 				722C4977298A43CA003F3F09 /* Assets.xcassets in Resources */,
+				722C4991298AA221003F3F09 /* cat_loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +275,7 @@
 				722C498F298A4E4E003F3F09 /* Cat.swift in Sources */,
 				722C4970298A43C9003F3F09 /* SceneDelegate.swift in Sources */,
 				722C498D298A47B2003F3F09 /* AlamofireManager.swift in Sources */,
+				722C4993298AA63A003F3F09 /* LoadingView.swift in Sources */,
 				722C498B298A4615003F3F09 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

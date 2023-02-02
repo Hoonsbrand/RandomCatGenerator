@@ -16,28 +16,30 @@ final class AlamofireManager {
     
     private init() {}
     
+    // 커스텀 세션을 만들어 디폴트 헤더를 적용
     static var sessionManager: Session = {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = [:]
-        configuration.httpAdditionalHeaders?["Accept"] = "application/json"
+        configuration.headers = [.authorization(API.CLIENT_ID), .accept("application/json")]
         return Alamofire.Session(configuration: configuration)
     }()
     
-    func getRandomCat(parameters: Parameters, completion: @escaping(_ result: Data) -> Void) {
+    func getRandomCat(completion: @escaping(_ result: Data) -> Void) {
         let url = "/v1/images/search"
-        let parameters = parameters
-  
-        AlamofireManager.sessionManager.request(baseURL + url, method: .get, parameters: parameters).responseString { response in
-            switch response.result {
-            case .success(_):
-                completion(response.data!)
-                break
-            case .failure(let error):
-                print(error)
-                print(response.data!)
-                break
+        
+        AlamofireManager.sessionManager
+            .request(baseURL + url, method: .get)
+            .validate(statusCode: 200..<300)
+            .responseString { response in
+                switch response.result {
+                case .success(_):
+                    completion(response.data!)
+                    break
+                case .failure(let error):
+                    print(error)
+                    print(response.data!)
+                    break
+                }
             }
-        }
     }
     
 }

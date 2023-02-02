@@ -9,8 +9,9 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    
+    // 로딩뷰를 위해 윈도우에 접근하기 위한 변수
+    static var window: UIWindow { (UIApplication.shared.delegate?.window!)! }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
