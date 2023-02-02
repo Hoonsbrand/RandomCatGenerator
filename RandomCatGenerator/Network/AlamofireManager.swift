@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-final class AlamofireManager {
+struct AlamofireManager {
     static let shared = AlamofireManager()
     
     let apiKey = API.CLIENT_ID

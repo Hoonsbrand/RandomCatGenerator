@@ -39,9 +39,9 @@ final class RandomCatViewController: UIViewController {
         return button
     }()
     
-    private let animationView: LottieAnimationView = {
-        let lottieAnimationView = LottieAnimationView(name: "cat_loading")
-//        lottieAnimationView.backgroundColor = UIColor(red: 52/255, green: 144/255, blue: 220/255, alpha: 1.0)
+    // 런치화면에서 보여줄 Lottie
+    private let launchAnimationView: LottieAnimationView = {
+        let lottieAnimationView = LottieAnimationView(name: "cat_launch")
         return lottieAnimationView
     }()
     
@@ -49,27 +49,34 @@ final class RandomCatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(animationView)
-        
-        animationView.frame = view.bounds
-        animationView.center = view.center
-        animationView.alpha = 1
-        
-        animationView.play { _ in
-            UIView.animate(withDuration: 0.3, animations: {
-                self.animationView.alpha = 0
-            }, completion: { _ in
-                self.animationView.isHidden = true
-                self.animationView.removeFromSuperview()
-            })
-        }
-        self.configureUI()
+        configureUI()
     }
     
     // MARK: - Helpers
     
     private func configureUI() {
-        view.backgroundColor = UIColor(patternImage: UIImage(named: "catPawImage")!)
+        view.backgroundColor = #colorLiteral(red: 1, green: 0.9710575374, blue: 0.7176470588, alpha: 1)
+        navigationItem.title = "고양이 생성기"
+        let breedButton = UIBarButtonItem(image: UIImage(systemName: "pawprint.circle"), style: .plain, target: self, action: #selector(goToBreedController))
+        self.navigationItem.rightBarButtonItem = breedButton
+        
+        view.addSubview(launchAnimationView)
+        launchAnimationView.frame = view.bounds
+        launchAnimationView.center = view.center
+        launchAnimationView.alpha = 1
+        
+        launchAnimationView.play { _ in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.launchAnimationView.alpha = 0
+            }, completion: { _ in
+                self.launchAnimationView.isHidden = true
+                self.launchAnimationView.removeFromSuperview()
+                self.setAttribute()
+            })
+        }
+    }
+
+    private func setAttribute() {
         setRefreshButton()
         setCatImageView()
         getRandomCat()
@@ -131,3 +138,12 @@ extension RandomCatViewController {
     }
 }
 
+// MARK: - Push View
+
+extension RandomCatViewController {
+    @objc func goToBreedController() {
+        let controller = BreedListController()
+        
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}
