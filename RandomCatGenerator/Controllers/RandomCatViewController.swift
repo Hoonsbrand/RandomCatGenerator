@@ -65,7 +65,9 @@ final class RandomCatViewController: UIViewController {
         launchAnimationView.center = view.center
         launchAnimationView.alpha = 1
         
-        launchAnimationView.play { _ in
+        launchAnimationView.play { [weak self] _ in
+            guard let self = self else { return }
+            
             UIView.animate(withDuration: 0.3, animations: {
                 self.launchAnimationView.alpha = 0
             }, completion: { _ in
@@ -109,7 +111,9 @@ extension RandomCatViewController {
     @objc func getRandomCat() {
         LoadingView.shared.show()
         
-        AlamofireManager.shared.getRandomCat() { result in
+        AlamofireManager.shared.getRandomCat() { [weak self] result in
+            guard let self = self else { return }
+            
             do {
                 let res = try JSONDecoder().decode([Cat].self, from: result)
                 guard let url = res[0].url else { return }
@@ -124,9 +128,10 @@ extension RandomCatViewController {
     // 고양이 사진을 ImageView에 넣는 메서드
     private func loadCatImage(_ urlString: String) {
         let downloadQueue = DispatchQueue(__label: urlString, attr: nil)
-        downloadQueue.async() {
+        downloadQueue.async() { [weak self] in
+            guard let self = self else { return }
+            
             let url = URL(string: urlString)
-
             DispatchQueue.main.async {
                 self.catImageView.kf.setImage(with: url) { _ in
                     LoadingView.shared.hide()

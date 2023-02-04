@@ -9,20 +9,29 @@ import UIKit
 import SnapKit
 import DropDown
 import Kingfisher
+import Charts
 
 final class BreedListController: UIViewController {
     
     // MARK: - Properties
     
+    // DropDown
     private let dropDown = DropDown()
     
+    // Breedlist
     private var breedList: BreedList?
     
+    // BreedListViewModel
     private var viewModel: BreedListViewModel? {
         didSet {
             setBreedInformation()
         }
     }
+    
+    private let scrollViewContainer: UIStackView = {
+        let sv = UIStackView()
+        return sv
+    }()
     
     // 품종 선택 버튼
     private lazy var changeBreedButton: UIButton = {
@@ -32,6 +41,7 @@ final class BreedListController: UIViewController {
         return button
     }()
     
+    // 품종 변경 View
     private let changeBreedView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray5
@@ -39,6 +49,7 @@ final class BreedListController: UIViewController {
         return view
     }()
     
+    // 품종 변경 버튼
     private var changeBreedTextField: UITextField = {
         let tf = UITextField()
         tf.text = "냥이를 선택해주세요!"
@@ -47,6 +58,7 @@ final class BreedListController: UIViewController {
         return tf
     }()
     
+    // 드랍다운 아이콘
     private var dropDownIcon: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "arrowtriangle.down.fill")
@@ -63,36 +75,50 @@ final class BreedListController: UIViewController {
         return iv
     }()
     
-    // 고양이 출신 나라 label
-    private lazy var originLabel: UILabel = {
-        return makeLabel()
+    private let originStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        return sv
     }()
+    // 고양이 출신 나라 label
+    private lazy var originLabel: UILabel = { return makeLabel() }()
     
     // 품종 타입 label
-    private lazy var breedTypeLabel: UILabel = {
-        return makeLabel()
+    private lazy var breedTypeLabel: UILabel = { return makeLabel() }()
+    
+    private let descriptionStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 10
+        return sv
     }()
     
     // 품종 이름 label
-    private lazy var breedNameLabel: UILabel = {
-        return makeLabel(size: 20)
-    }()
+    private lazy var breedNameLabel: UILabel = { return makeLabel(size: 20) }()
     
     // 품종 설명 label
-    private lazy var descriptionLabel: UILabel = {
-        return makeLabel()
-    }()
+    private lazy var descriptionLabel: UILabel = { return makeLabel() }()
     
     // 특성 키워드 label
-    private lazy var temperamentLabel: UILabel = {
-        return makeLabel()
+    private lazy var temperamentLabel: UILabel = { return makeLabel() }()
+    
+    // 차트 뷰
+    private let radarChartView: RadarChartView = {
+        let rv = RadarChartView()
+        rv.animate(yAxisDuration: 2.0)
+        rv.yAxis.enabled = false
+        rv.noDataText = "냥이를 선택해주세요!"
+        rv.legend.enabled = false
+        rv.highlightPerTapEnabled = false
+        rv.xAxis.axisMaximum = 5
+        rv.xAxis.axisMinimum = 1
+
+        return rv
     }()
     
-    // 더미 View
-    private let dummyView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 1, green: 0.7912161358, blue: 0.573695015, alpha: 1)
-        return view
+    private let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        return sv
     }()
   
     // MARK: - Lifecycle
@@ -114,20 +140,6 @@ final class BreedListController: UIViewController {
         return label
     }
     
-    private func setBreedInformation() {
-        guard let viewModel = viewModel else { return }
-        viewModel.getBreedURL { [weak self] url in
-            guard let self = self else { return }
-            print(url)
-            self.catImageView.kf.setImage(with: url)
-        }
-        originLabel.text = viewModel.country
-        breedTypeLabel.text = viewModel.type
-        breedNameLabel.text = viewModel.name
-        descriptionLabel.text = viewModel.description
-        temperamentLabel.text = viewModel.temperament
-    }
-    
     // 전체 UI 구성
     private func configureUI() {
         view.backgroundColor = #colorLiteral(red: 1, green: 0.9710575374, blue: 0.7176470588, alpha: 1)
@@ -138,9 +150,7 @@ final class BreedListController: UIViewController {
     
     // 품종변경 버튼 세팅
     private func setChangeBreedButton() {
-        
         view.addSubview(changeBreedView)
-        
         let stack = UIStackView(arrangedSubviews: [changeBreedTextField, dropDownIcon])
         stack.axis = .horizontal
         stack.spacing = 10
@@ -162,49 +172,62 @@ final class BreedListController: UIViewController {
         stack.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+        
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(changeBreedView.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        scrollView.addSubview(scrollViewContainer)
+        scrollViewContainer.snp.makeConstraints {
+            $0.top.width.equalToSuperview()
+        }
     }
     
     // 품종사진 View 세팅
     private func setCatImageView() {
-        view.addSubview(catImageView)
+        scrollViewContainer.addSubview(catImageView)
         catImageView.snp.makeConstraints {
             $0.height.equalTo(250)
-            $0.top.equalTo(changeBreedButton.snp.bottom).offset(10)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalToSuperview()
         }
     }
     
     // 품종 나라부터 특성까지의 StackView
     private func setStackView() {
         // 품종 나라, 품종 타입 StackView
-        let originStack = UIStackView(arrangedSubviews: [originLabel, breedTypeLabel])
-        originStack.axis = .horizontal
-        view.addSubview(originStack)
-        originStack.snp.makeConstraints {
+        let _ = [originLabel, breedTypeLabel].map
+        { originStackView.addArrangedSubview($0) }
+ 
+        scrollViewContainer.addSubview(originStackView)
+        originStackView.snp.makeConstraints {
             $0.top.equalTo(catImageView.snp.bottom).offset(10)
             $0.leading.equalToSuperview().inset(5)
         }
         
+        
+        let _ = [breedNameLabel, descriptionLabel, temperamentLabel].map
+        { descriptionStackView.addArrangedSubview($0) }
+        
         // 품종이름, 설명, 키워드 StackView
-        let descriptionStack = UIStackView(arrangedSubviews: [breedNameLabel, descriptionLabel, temperamentLabel])
-        descriptionStack.axis = .vertical
-        descriptionStack.spacing = 10
-        view.addSubview(descriptionStack)
-        descriptionStack.snp.makeConstraints {
-            $0.top.equalTo(originStack.snp.bottom).offset(10)
+        scrollViewContainer.addSubview(descriptionStackView)
+        descriptionStackView.snp.makeConstraints {
+            $0.top.equalTo(originStackView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(5)
         }
         
-        // DummyView
-        view.addSubview(dummyView)
-        dummyView.snp.makeConstraints {
-            $0.top.equalTo(descriptionStack.snp.bottom).offset(10)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        // radarChartView
+        scrollViewContainer.addSubview(radarChartView)
+        radarChartView.snp.makeConstraints {
+            $0.top.equalTo(descriptionStackView.snp.bottom).offset(10)
+            $0.width.bottom.equalToSuperview()
+            $0.height.equalTo(300)
         }
     }
 }
 
-// MARK: - fetchBreedList
+// MARK: - fetchBreedList & setBreedInformation
 
 extension BreedListController {
     // 품종 리스트를 얻어옴. viewDidLoad에서 호출됨.
@@ -218,6 +241,54 @@ extension BreedListController {
             }
         }
     }
+    
+    // viewModel 데이터를 각 UI에 할당
+    private func setBreedInformation() {
+        guard var viewModel = viewModel else { return }
+        viewModel.getBreedURL { [weak self] url in
+            guard let self = self else { return }
+            
+            print("DEBUG: URL: \(url)")
+            self.catImageView.kf.indicatorType = .activity
+            self.catImageView.kf.setImage(with: url)
+        }
+        
+        originLabel.text = viewModel.country
+        breedTypeLabel.text = viewModel.type
+        breedNameLabel.text = viewModel.name
+        descriptionLabel.text = viewModel.description
+        temperamentLabel.text = viewModel.temperament
+        
+        setChart(characteristics: viewModel.characteristics, values: viewModel.characterLevelArray)
+        scrollView.updateContentSize()
+        scrollView.setContentOffset(CGPointZero, animated: false)
+    }
+}
+
+// MARK: - Configure Chart
+
+extension BreedListController {
+    // 차트 구성
+    private func setChart(characteristics: [String], values: [Int]) {
+        var dataEntries: [RadarChartDataEntry] = []
+        
+        for i in 0..<characteristics.count {
+            let dataEntry = RadarChartDataEntry(value: Double(values[i]))
+            dataEntries.append(dataEntry)
+        }
+
+        let chartDataSet = RadarChartDataSet(entries: dataEntries)
+        chartDataSet.drawFilledEnabled = true
+        chartDataSet.drawValuesEnabled = false
+        
+        let chartData = RadarChartData(dataSet: chartDataSet)
+        
+        radarChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: characteristics)
+        radarChartView.data = chartData
+        radarChartView.xAxis.spaceMax = 0
+        radarChartView.xAxis.spaceMin = 0
+    }
+    
 }
 
 // MARK: - ConfigureDropDown
@@ -227,7 +298,6 @@ extension BreedListController {
     @objc func showDropDown() {
         dropDown.show()
         dropDownIcon.image = UIImage(systemName: "arrowtriangle.up.fill")
-        print(dropDown.isOpaque)
     }
     
     private func configureDropDown() {
@@ -260,4 +330,27 @@ extension BreedListController {
         }
     }
 }
+
+extension UIScrollView {
+    func updateContentSize() {
+        let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
+        
+        // 계산된 크기로 컨텐츠 사이즈 설정
+        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height)
+    }
+    
+    private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
+        var totalRect: CGRect = .zero
+        
+        // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
+        for subView in view.subviews {
+            totalRect = totalRect.union(recursiveUnionInDepthFor(view: subView))
+        }
+        
+        // 최종 계산 영역의 크기를 반환
+        return totalRect.union(view.frame)
+    }
+}
+
+
 
