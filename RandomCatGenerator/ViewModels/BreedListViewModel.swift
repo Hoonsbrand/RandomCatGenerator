@@ -17,9 +17,7 @@ struct BreedListViewModel {
         }
     }
     
-    var country: String {
-        return breed.origin
-    }
+    var country: String { return breed.origin }
     
     var type: String {
         if breed.natural == 0 {

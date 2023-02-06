@@ -28,11 +28,20 @@ final class BreedListController: UIViewController {
         }
     }
     
+    /// ------------------- 스크롤뷰와 내의 컨텐츠 -------------------
+    // 스크롤 뷰
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
+    
+    // 스크롤 뷰 내의 컨텐츠를 담는 StackView
     private let scrollViewContainer: UIStackView = {
         let sv = UIStackView()
         return sv
     }()
     
+    /// ------------------- 최상단 품종선택버튼 -------------------
     // 품종 선택 버튼
     private lazy var changeBreedButton: UIButton = {
         let button = UIButton(type: .system)
@@ -67,6 +76,7 @@ final class BreedListController: UIViewController {
         return iv
     }()
     
+    /// ------------------- 고양이 사진 -------------------
     // 고양이 사진 ImageView
     private let catImageView: UIImageView = {
         let iv = UIImageView()
@@ -75,6 +85,8 @@ final class BreedListController: UIViewController {
         return iv
     }()
     
+    /// ------------------- 출신나라, 품종타입 -------------------
+    // 출신나라와 품종타입을 담는 StackView
     private let originStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
@@ -86,6 +98,8 @@ final class BreedListController: UIViewController {
     // 품종 타입 label
     private lazy var breedTypeLabel: UILabel = { return makeLabel() }()
     
+    /// ------------------- 품종 이름, 설명, 특성 키워드 -------------------
+    // 품종 이름, 설명, 특성 키워드를 담는 StackView
     private let descriptionStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
@@ -102,6 +116,7 @@ final class BreedListController: UIViewController {
     // 특성 키워드 label
     private lazy var temperamentLabel: UILabel = { return makeLabel() }()
     
+    /// ------------------- 차트 -------------------
     // 차트 뷰
     private let radarChartView: RadarChartView = {
         let rv = RadarChartView()
@@ -112,13 +127,7 @@ final class BreedListController: UIViewController {
         rv.highlightPerTapEnabled = false
         rv.xAxis.axisMaximum = 5
         rv.xAxis.axisMinimum = 1
-
         return rv
-    }()
-    
-    private let scrollView: UIScrollView = {
-        let sv = UIScrollView()
-        return sv
     }()
   
     // MARK: - Lifecycle
@@ -206,11 +215,10 @@ final class BreedListController: UIViewController {
             $0.leading.equalToSuperview().inset(5)
         }
         
-        
+        // 품종이름, 설명, 키워드 StackView
         let _ = [breedNameLabel, descriptionLabel, temperamentLabel].map
         { descriptionStackView.addArrangedSubview($0) }
         
-        // 품종이름, 설명, 키워드 StackView
         scrollViewContainer.addSubview(descriptionStackView)
         descriptionStackView.snp.makeConstraints {
             $0.top.equalTo(originStackView.snp.bottom).offset(10)
@@ -227,7 +235,7 @@ final class BreedListController: UIViewController {
     }
 }
 
-// MARK: - fetchBreedList & setBreedInformation
+// MARK: - 품종 데이터 관련: fetchBreedList & setBreedInformation
 
 extension BreedListController {
     // 품종 리스트를 얻어옴. viewDidLoad에서 호출됨.
@@ -265,7 +273,7 @@ extension BreedListController {
     }
 }
 
-// MARK: - Configure Chart
+// MARK: - 차트 관련: Configure Chart
 
 extension BreedListController {
     // 차트 구성
@@ -291,7 +299,7 @@ extension BreedListController {
     
 }
 
-// MARK: - ConfigureDropDown
+// MARK: - DropDown 관련: ConfigureDropDown
 
 extension BreedListController {
     // 버튼을 누르면 보여지는 DropDown
@@ -331,7 +339,10 @@ extension BreedListController {
     }
 }
 
+// MARK: - UIScrollView Extension
+
 extension UIScrollView {
+    // 계산된 크기를 바탕으로 사이즈를 설정 (scrollViewContainer의 요소들이 모두 할당되면 호출)
     func updateContentSize() {
         let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
         
@@ -339,6 +350,7 @@ extension UIScrollView {
         self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height)
     }
     
+    // 스크롤뷰안 컨텐츠의 사이즈를 계산해서 반환
     private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
         var totalRect: CGRect = .zero
         
@@ -351,6 +363,3 @@ extension UIScrollView {
         return totalRect.union(view.frame)
     }
 }
-
-
-
