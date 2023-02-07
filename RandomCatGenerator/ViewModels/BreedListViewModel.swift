@@ -6,26 +6,26 @@
 //
 
 import UIKit
+import Kingfisher
+import ImageSlideshow
 
 struct BreedListViewModel {
     private let breed: Breed
     
-    func getBreedURL(completion: @escaping(URL) -> Void) {
-        guard let imageId = breed.referenceImageID else { return }
-        AlamofireManager.shared.getBreedURL(imageId: imageId) { url in
-            completion(url)
+    func getBreedImageURL(completion: @escaping([InputSource]) -> Void) {
+        var slider = [InputSource]()
+        
+        AlamofireManager.shared.getBreedImageURL(breedId: breedId) { urlArray in
+            for i in 0..<urlArray.count {
+                slider.append(KingfisherSource(url: urlArray[i]))
+            }
+            completion(slider)
         }
     }
+    
+    var breedId: String { return breed.id }
     
     var country: String { return breed.origin }
-    
-    var type: String {
-        if breed.natural == 0 {
-            return ""
-        } else {
-            return "natural"
-        }
-    }
     
     var name: String { return breed.name }
     
@@ -64,6 +64,10 @@ struct BreedListViewModel {
 //    var strangerFriendly: Int { return breed.strangerFriendly }
     
 //    var vocalisation: Int { return breed.vocalisation }
+    
+    var weight: String { return "평균 몸무게: \(breed.weight.metric)kg" }
+    
+    var lifeSpan: String { return "평균 수명: \(breed.lifeSpan)년" }
     
     init(breed: Breed) {
         self.breed = breed

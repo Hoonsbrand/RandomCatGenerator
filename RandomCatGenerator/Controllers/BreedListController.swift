@@ -10,6 +10,7 @@ import SnapKit
 import DropDown
 import Kingfisher
 import Charts
+import ImageSlideshow
 
 final class BreedListController: UIViewController {
     
@@ -85,21 +86,13 @@ final class BreedListController: UIViewController {
         return iv
     }()
     
-    /// ------------------- 출신나라, 품종타입 -------------------
-    // 출신나라와 품종타입을 담는 StackView
-    private let originStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        return sv
+    private let catImageSlider: ImageSlideshow = {
+        let slider = ImageSlideshow()
+        return slider
     }()
-    // 고양이 출신 나라 label
-    private lazy var originLabel: UILabel = { return makeLabel() }()
     
-    // 품종 타입 label
-    private lazy var breedTypeLabel: UILabel = { return makeLabel() }()
-    
-    /// ------------------- 품종 이름, 설명, 특성 키워드 -------------------
-    // 품종 이름, 설명, 특성 키워드를 담는 StackView
+    /// ------------------- 출신나라, 품종이름, 설명, 특성 키워드 -------------------
+    // 출신나라, 품종이름, 설명, 특성 키워드를 담는 StackView
     private let descriptionStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
@@ -107,14 +100,23 @@ final class BreedListController: UIViewController {
         return sv
     }()
     
+    // 고양이 출신나라 label
+    private lazy var originLabel: UILabel = { return makeLabel() }()
+    
     // 품종 이름 label
     private lazy var breedNameLabel: UILabel = { return makeLabel(size: 20) }()
     
     // 품종 설명 label
     private lazy var descriptionLabel: UILabel = { return makeLabel() }()
     
+    // 평균 몸무게
+    private lazy var averageWeightLabel: UILabel = { return makeLabel(size: 12) }()
+    
+    // 평균 수명
+    private lazy var lifeSpanLabel: UILabel = { return makeLabel(size: 12) }()
+    
     // 특성 키워드 label
-    private lazy var temperamentLabel: UILabel = { return makeLabel() }()
+    private lazy var temperamentLabel: UILabel = { return makeLabel(isTemperament: true) }()
     
     /// ------------------- 차트 -------------------
     // 차트 뷰
@@ -127,6 +129,7 @@ final class BreedListController: UIViewController {
         rv.highlightPerTapEnabled = false
         rv.xAxis.axisMaximum = 5
         rv.xAxis.axisMinimum = 1
+        rv.rotationEnabled = false
         return rv
     }()
   
@@ -142,9 +145,16 @@ final class BreedListController: UIViewController {
     // MARK: - Helpers
     
     // 반복되는 label 만드는 작업을 도와주는 메서드
-    private func makeLabel(size: CGFloat = 15) -> UILabel {
+    private func makeLabel(size: CGFloat = 15, isTemperament: Bool = false) -> UILabel {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: size)
+        
+        if !isTemperament {
+            label.font = UIFont.systemFont(ofSize: size)
+        } else {
+            label.font = UIFont.italicSystemFont(ofSize: 12)
+            label.textColor = UIColor.systemGray
+        }
+        
         label.numberOfLines = 0
         return label
     }
@@ -196,32 +206,23 @@ final class BreedListController: UIViewController {
     
     // 품종사진 View 세팅
     private func setCatImageView() {
-        scrollViewContainer.addSubview(catImageView)
-        catImageView.snp.makeConstraints {
+        // catImageView
+        scrollViewContainer.addSubview(catImageSlider)
+        catImageSlider.snp.makeConstraints {
             $0.height.equalTo(250)
             $0.top.leading.trailing.equalToSuperview()
         }
     }
     
-    // 품종 나라부터 특성까지의 StackView
+    // 출시나라부터 차트까지의 StackView
     private func setStackView() {
-        // 품종 나라, 품종 타입 StackView
-        let _ = [originLabel, breedTypeLabel].map
-        { originStackView.addArrangedSubview($0) }
- 
-        scrollViewContainer.addSubview(originStackView)
-        originStackView.snp.makeConstraints {
-            $0.top.equalTo(catImageView.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().inset(5)
-        }
-        
-        // 품종이름, 설명, 키워드 StackView
-        let _ = [breedNameLabel, descriptionLabel, temperamentLabel].map
-        { descriptionStackView.addArrangedSubview($0) }
+        // 출신나라, 품종이름, 설명, 키워드 StackView
+        let _ = [originLabel, breedNameLabel, descriptionLabel,
+                 averageWeightLabel, lifeSpanLabel, temperamentLabel].map { descriptionStackView.addArrangedSubview($0) }
         
         scrollViewContainer.addSubview(descriptionStackView)
         descriptionStackView.snp.makeConstraints {
-            $0.top.equalTo(originStackView.snp.bottom).offset(10)
+            $0.top.equalTo(catImageSlider.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(5)
         }
         
@@ -253,18 +254,18 @@ extension BreedListController {
     // viewModel 데이터를 각 UI에 할당
     private func setBreedInformation() {
         guard var viewModel = viewModel else { return }
-        viewModel.getBreedURL { [weak self] url in
+        
+        viewModel.getBreedImageURL { [weak self] images in
             guard let self = self else { return }
-            
-            print("DEBUG: URL: \(url)")
-            self.catImageView.kf.indicatorType = .activity
-            self.catImageView.kf.setImage(with: url)
+            self.catImageSlider.setImageInputs(images)
+            print(images)
         }
         
         originLabel.text = viewModel.country
-        breedTypeLabel.text = viewModel.type
         breedNameLabel.text = viewModel.name
         descriptionLabel.text = viewModel.description
+        averageWeightLabel.text = viewModel.weight
+        lifeSpanLabel.text = viewModel.lifeSpan
         temperamentLabel.text = viewModel.temperament
         
         setChart(characteristics: viewModel.characteristics, values: viewModel.characterLevelArray)
@@ -296,7 +297,6 @@ extension BreedListController {
         radarChartView.xAxis.spaceMax = 0
         radarChartView.xAxis.spaceMin = 0
     }
-    
 }
 
 // MARK: - DropDown 관련: ConfigureDropDown
@@ -317,7 +317,7 @@ extension BreedListController {
         dropDown.selectedTextColor = .brown // 선택된 아이템 텍스트 색상
         dropDown.backgroundColor = .white // 아이템 팝업 배경 색상
         dropDown.selectionBackgroundColor = .lightGray // 선택한 아이템 배경 색상
-        dropDown.setupCornerRadius(8)
+        dropDown.setupCornerRadius(20) // 모서리 둥글게
         dropDown.dismissMode = .automatic // 팝업을 닫을 모드 설정
         
         // 품종 선택 시
