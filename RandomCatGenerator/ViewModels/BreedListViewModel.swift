@@ -12,6 +12,7 @@ import ImageSlideshow
 struct BreedListViewModel {
     private let breed: Breed
     
+    // Alamofire로 받아온 이미지 url 배열을 KinfisherSource를 이용해 InputSource로 넘김
     func getBreedImageURL(completion: @escaping([InputSource]) -> Void) {
         var slider = [InputSource]()
         

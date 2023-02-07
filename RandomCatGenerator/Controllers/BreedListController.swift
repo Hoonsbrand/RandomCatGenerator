@@ -78,16 +78,16 @@ final class BreedListController: UIViewController {
     }()
     
     /// ------------------- 고양이 사진 -------------------
-    // 고양이 사진 ImageView
-    private let catImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
-    
-    private let catImageSlider: ImageSlideshow = {
+    // 고양이 사진 ImageSlideshow
+    private lazy var catImageSlider: ImageSlideshow = {
         let slider = ImageSlideshow()
+        slider.contentScaleMode = .scaleAspectFill
+        slider.zoomEnabled = true
+        slider.activityIndicator = DefaultActivityIndicator(style: .large, color: nil)
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didImageTapped))
+        slider.addGestureRecognizer(gestureRecognizer)
+        slider.isUserInteractionEnabled = true
         return slider
     }()
     
@@ -234,6 +234,13 @@ final class BreedListController: UIViewController {
             $0.height.equalTo(300)
         }
     }
+    
+// MARK: - Selectors
+    
+    @objc func didImageTapped() {
+        print("tapped")
+        catImageSlider.presentFullScreenController(from: self)
+    }
 }
 
 // MARK: - 품종 데이터 관련: fetchBreedList & setBreedInformation
@@ -258,7 +265,6 @@ extension BreedListController {
         viewModel.getBreedImageURL { [weak self] images in
             guard let self = self else { return }
             self.catImageSlider.setImageInputs(images)
-            print(images)
         }
         
         originLabel.text = viewModel.country
