@@ -14,6 +14,13 @@ final class RandomCatViewController: UIViewController {
 
     // MARK: - Properties
     
+    private var breedId = "" {
+        didSet {
+            navigationItem.leftBarButtonItem = backToRandomPhotoButton
+            navigationItem.leftBarButtonItem?.isHidden = false
+        }
+    }
+    
     // 고양이 사진을 보여주는 ImageView
     private let catImageView: UIImageView = {
         let iv = UIImageView()
@@ -43,6 +50,13 @@ final class RandomCatViewController: UIViewController {
     private let launchAnimationView: LottieAnimationView = {
         let lottieAnimationView = LottieAnimationView(name: "cat_launch")
         return lottieAnimationView
+    }()
+    
+    lazy var backToRandomPhotoButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "arrow.clockwise"),
+                                     style: .plain, target: self,
+                                     action: #selector(backToRandomPhoto))
+        return button
     }()
     
     // MARK: - Lifecycle
@@ -101,6 +115,15 @@ final class RandomCatViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
+    
+    // MARK: - Selectors
+    
+    @objc func backToRandomPhoto() {
+        breedId = ""
+        navigationItem.leftBarButtonItem?.isHidden = true
+        navigationItem.title = "랜덤 고양이 생성기"
+        getRandomCat()
+    }
 }
 
 // MARK: - API
@@ -111,7 +134,7 @@ extension RandomCatViewController {
     @objc func getRandomCat() {
         LoadingView.shared.show()
         
-        AlamofireManager.shared.getRandomCat() { [weak self] result in
+        AlamofireManager.shared.getRandomCat(breedId: breedId) { [weak self] result in
             guard let self = self else { return }
             
             do {
@@ -151,8 +174,12 @@ extension RandomCatViewController {
     }
 }
 
+// MARK: - SendBreedIdDelegate
+
 extension RandomCatViewController: SendBreedIdDelegate {
     func recieveBreedId(breedname: String, breedId: String) {
-        <#code#>
+        self.breedId = breedId
+        navigationItem.title = breedname
+        getRandomCat()
     }
 }

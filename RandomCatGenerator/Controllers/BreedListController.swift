@@ -264,14 +264,14 @@ final class BreedListController: UIViewController {
     
 // MARK: - Selectors
     
-    // 이미지를 클릭했을 때 전체화면으로 보여주는 메서드
     @objc func backToRandomCatVC() {
         guard let viewModel = viewModel else { return }
         delegate?.recieveBreedId(breedname: viewModel.name, breedId: viewModel.breedId)
+        navigationController?.popViewController(animated: true)
     }
     
+    // 이미지를 클릭했을 때 전체화면으로 보여주는 메서드
     @objc func didImageTapped() {
-        print("tapped")
         catImageSlider.presentFullScreenController(from: self)
     }
 }

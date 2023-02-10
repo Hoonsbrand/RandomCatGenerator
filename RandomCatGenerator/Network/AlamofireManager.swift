@@ -33,9 +33,9 @@ final class AlamofireManager {
     }()
     
     // 랜덤 고양이 사진을 가져오는 메서드, 메인 뷰에서 호출
-    func getRandomCat(completion: @escaping(_ result: Data) -> Void) {
+    func getRandomCat(breedId: String, completion: @escaping(_ result: Data) -> Void) {
         AlamofireManager.sessionManager
-            .request(baseURL + searchUrl, method: .get)
+            .request(baseURL + searchUrl, method: .get, parameters: ["breed_ids" : breedId])
             .validate(statusCode: 200..<300)
             .responseString { response in
                 switch response.result {
