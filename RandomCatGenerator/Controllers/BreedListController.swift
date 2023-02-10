@@ -141,16 +141,16 @@ final class BreedListController: UIViewController {
     }()
     
     /// ------------------- 선택한 품종 랜덤사진 버튼 -------------------
-//    private lazy var backToRandomCatButton: UIButton = {
-//        let button = UIButton()
-//        button.backgroundColor = .lightGray
-//        button.setTitle("선택한 품종 랜덤사진 보기🐱", for: .normal)
-//        button.setTitleColor(.black, for: .normal)
-//        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-//        button.layer.cornerRadius = 30
-//        button.addTarget(self, action: #selector(backToRandomCatVC), for: .touchUpInside)
-//        return button
-//    }()
+    private lazy var backToRandomCatButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .lightGray
+        button.setTitle("선택한 품종 랜덤사진 보기🐱", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 30
+        button.addTarget(self, action: #selector(backToRandomCatVC), for: .touchUpInside)
+        return button
+    }()
   
     // MARK: - Lifecycle
     
@@ -184,7 +184,7 @@ final class BreedListController: UIViewController {
         setChangeBreedButton()
         setCatImageView()
         setStackView()
-//        backToRandomCatButton.isHidden = true
+        backToRandomCatButton.isHidden = true
     }
     
     // 품종변경 버튼 세팅
@@ -254,13 +254,13 @@ final class BreedListController: UIViewController {
             $0.height.equalTo(300)
         }
         
-        // backToRandomCatButton
-//        scrollViewContainer.addSubview(backToRandomCatButton)
-//        backToRandomCatButton.snp.makeConstraints {
-//            $0.top.equalTo(radarChartView.snp.bottom).offset(10)
-//            $0.leading.trailing.equalToSuperview().inset(40)
-//            $0.height.equalTo(60)
-//        }
+         backToRandomCatButton
+        scrollViewContainer.addSubview(backToRandomCatButton)
+        backToRandomCatButton.snp.makeConstraints {
+            $0.top.equalTo(radarChartView.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(40)
+            $0.height.equalTo(60)
+        }
     }
     
 // MARK: - Selectors
@@ -310,7 +310,7 @@ extension BreedListController {
         temperamentLabel.text = viewModel.temperament
         
         setChart(characteristics: viewModel.characteristics, values: viewModel.characterLevelArray)
-//        backToRandomCatButton.isHidden = false
+        backToRandomCatButton.isHidden = false
         scrollView.updateContentSize()
         scrollView.setContentOffset(CGPointZero, animated: false)
     }
