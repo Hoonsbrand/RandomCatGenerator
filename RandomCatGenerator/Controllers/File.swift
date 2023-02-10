@@ -1,17 +1,11 @@
 //
-//  BreedListController.swift
+//  File.swift
 //  RandomCatGenerator
 //
-//  Created by hoonsbrand on 2023/02/02.
+//  Created by hoonsbrand on 2023/02/10.
 //
 
-import UIKit
-import SnapKit
-import DropDown
-import Kingfisher
-import Charts
-import ImageSlideshow
-
+import Foundation
 protocol SendBreedIdDelegate: AnyObject {
     func recieveBreedId(breedname: String, breedId: String)
 }
@@ -21,7 +15,7 @@ final class BreedListController: UIViewController {
     // MARK: - Properties
     
     // delegate
-    weak var delegate: SendBreedIdDelegate?
+    var delegate: SendBreedIdDelegate?
     
     // DropDown
     private let dropDown = DropDown()
@@ -184,6 +178,7 @@ final class BreedListController: UIViewController {
         setChangeBreedButton()
         setCatImageView()
         setStackView()
+        backToRandomCatButton.isHidden = true
     }
     
     // 품종변경 버튼 세팅
@@ -233,7 +228,7 @@ final class BreedListController: UIViewController {
         }
     }
     
-    // 출시나라부터 차트까지의 StackView
+    // 출시나라부터 품종사진 버튼까지의 StackView
     private func setStackView() {
         // 출신나라, 품종이름, 설명, 키워드 StackView
         let _ = [originLabel, breedNameLabel, descriptionLabel,
@@ -249,7 +244,7 @@ final class BreedListController: UIViewController {
         scrollViewContainer.addSubview(radarChartView)
         radarChartView.snp.makeConstraints {
             $0.top.equalTo(descriptionStackView.snp.bottom).offset(10)
-            $0.width.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.height.equalTo(300)
         }
         
@@ -265,14 +260,15 @@ final class BreedListController: UIViewController {
 // MARK: - Selectors
     
     // 이미지를 클릭했을 때 전체화면으로 보여주는 메서드
+    @objc func didImageTapped() {
+        catImageSlider.presentFullScreenController(from: self)
+    }
+    
+    // 선택한 품종의 랜덤사진을 보기 위한 popView 버튼
     @objc func backToRandomCatVC() {
         guard let viewModel = viewModel else { return }
         delegate?.recieveBreedId(breedname: viewModel.name, breedId: viewModel.breedId)
-    }
-    
-    @objc func didImageTapped() {
-        print("tapped")
-        catImageSlider.presentFullScreenController(from: self)
+        navigationController?.popViewController(animated: true)
     }
 }
 

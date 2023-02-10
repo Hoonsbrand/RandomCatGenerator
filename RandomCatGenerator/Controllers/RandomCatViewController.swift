@@ -146,7 +146,13 @@ extension RandomCatViewController {
 extension RandomCatViewController {
     @objc func goToBreedController() {
         let controller = BreedListController()
-        
+        controller.delegate = self
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+extension RandomCatViewController: SendBreedIdDelegate {
+    func recieveBreedId(breedname: String, breedId: String) {
+        <#code#>
     }
 }
