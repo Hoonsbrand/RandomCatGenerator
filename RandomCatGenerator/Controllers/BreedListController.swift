@@ -12,9 +12,16 @@ import Kingfisher
 import Charts
 import ImageSlideshow
 
+protocol SendBreedIdDelegate: AnyObject {
+    func recieveBreedId(breedname: String, breedId: String)
+}
+
 final class BreedListController: UIViewController {
     
     // MARK: - Properties
+    
+    // delegate
+    var delegate: SendBreedIdDelegate?
     
     // DropDown
     private let dropDown = DropDown()
@@ -132,6 +139,18 @@ final class BreedListController: UIViewController {
         rv.rotationEnabled = false
         return rv
     }()
+    
+    /// ------------------- 선택한 품종 랜덤사진 버튼 -------------------
+//    private lazy var backToRandomCatButton: UIButton = {
+//        let button = UIButton()
+//        button.backgroundColor = .lightGray
+//        button.setTitle("선택한 품종 랜덤사진 보기🐱", for: .normal)
+//        button.setTitleColor(.black, for: .normal)
+//        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+//        button.layer.cornerRadius = 30
+//        button.addTarget(self, action: #selector(backToRandomCatVC), for: .touchUpInside)
+//        return button
+//    }()
   
     // MARK: - Lifecycle
     
@@ -165,6 +184,7 @@ final class BreedListController: UIViewController {
         setChangeBreedButton()
         setCatImageView()
         setStackView()
+//        backToRandomCatButton.isHidden = true
     }
     
     // 품종변경 버튼 세팅
@@ -214,7 +234,7 @@ final class BreedListController: UIViewController {
         }
     }
     
-    // 출시나라부터 차트까지의 StackView
+    // 출시나라부터 품종사진 버튼까지의 StackView
     private func setStackView() {
         // 출신나라, 품종이름, 설명, 키워드 StackView
         let _ = [originLabel, breedNameLabel, descriptionLabel,
@@ -230,16 +250,31 @@ final class BreedListController: UIViewController {
         scrollViewContainer.addSubview(radarChartView)
         radarChartView.snp.makeConstraints {
             $0.top.equalTo(descriptionStackView.snp.bottom).offset(10)
-            $0.width.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.height.equalTo(300)
         }
+        
+        // backToRandomCatButton
+//        scrollViewContainer.addSubview(backToRandomCatButton)
+//        backToRandomCatButton.snp.makeConstraints {
+//            $0.top.equalTo(radarChartView.snp.bottom).offset(10)
+//            $0.leading.trailing.equalToSuperview().inset(40)
+//            $0.height.equalTo(60)
+//        }
     }
     
 // MARK: - Selectors
     
+    // 이미지를 클릭했을 때 전체화면으로 보여주는 메서드
     @objc func didImageTapped() {
-        print("tapped")
         catImageSlider.presentFullScreenController(from: self)
+    }
+    
+    // 선택한 품종의 랜덤사진을 보기 위한 popView 버튼
+    @objc func backToRandomCatVC() {
+        guard let viewModel = viewModel else { return }
+        delegate?.recieveBreedId(breedname: viewModel.name, breedId: viewModel.breedId)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -275,6 +310,7 @@ extension BreedListController {
         temperamentLabel.text = viewModel.temperament
         
         setChart(characteristics: viewModel.characteristics, values: viewModel.characterLevelArray)
+//        backToRandomCatButton.isHidden = false
         scrollView.updateContentSize()
         scrollView.setContentOffset(CGPointZero, animated: false)
     }

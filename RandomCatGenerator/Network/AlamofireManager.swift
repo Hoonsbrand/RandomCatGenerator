@@ -24,6 +24,8 @@ final class AlamofireManager {
     
     private init() {}
     
+    typealias dataCompletion = (_ result: Data) -> Void
+    
     // 커스텀 세션을 만들어 디폴트 헤더를 적용
     static var sessionManager: Session = {
         let configuration = URLSessionConfiguration.default
@@ -33,9 +35,9 @@ final class AlamofireManager {
     }()
     
     // 랜덤 고양이 사진을 가져오는 메서드, 메인 뷰에서 호출
-    func getRandomCat(completion: @escaping(_ result: Data) -> Void) {
+    func getRandomCat(breedId: String = "", completion: @escaping(dataCompletion)) {
         AlamofireManager.sessionManager
-            .request(baseURL + searchUrl, method: .get)
+            .request(baseURL + searchUrl, method: .get, parameters: ["breed_ids" : breedId])
             .validate(statusCode: 200..<300)
             .responseString { response in
                 switch response.result {
@@ -64,12 +66,10 @@ final class AlamofireManager {
                     do {
                         let asJSON = try JSONSerialization.jsonObject(with: data)
                         let responseJson = JSON(asJSON)
-                        print(responseJson)
+//                        print(responseJson)
                         for (_, subJson): (String, JSON) in responseJson {
                             guard let urlString = subJson["url"].string else { continue }
                             guard let url = URL(string: urlString) else { continue }
-                            /// https://cocoapods.org/pods/SwiftGoogleTranslate
-                            /// 구글 번역 사용해서 번역해보기..?
                             urlArray.append(url)
                         }
                         completion(urlArray)
@@ -81,12 +81,5 @@ final class AlamofireManager {
                 }
             }
     }
-    
-    func getBreedURL(imageId: String, completion: @escaping(URL) -> Void) {
-        let urlString = breedBaseURL + "\(imageId).jpg"
-        guard let url = URL(string: urlString) else { return }
-        
-        completion(url)
-    }
-    
 }
+

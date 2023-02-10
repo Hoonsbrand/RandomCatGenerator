@@ -44,6 +44,7 @@
 		722C498E298A4E4E003F3F09 /* Cat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
 		722C4990298AA221003F3F09 /* cat_loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cat_loading.json; sourceTree = "<group>"; };
 		722C4992298AA63A003F3F09 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7258738C2996102700DFD411 /* Empty.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Empty.json; sourceTree = "<group>"; };
 		728DA4EB298B8D5B00E989B9 /* cat_launch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cat_launch.json; sourceTree = "<group>"; };
 		728DA4EF298B906500E989B9 /* breeds.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = breeds.json; sourceTree = "<group>"; };
 		728DA4F2298B9A3B00E989B9 /* Breed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breed.swift; sourceTree = "<group>"; };
@@ -97,10 +98,10 @@
 		722C496C298A43C9003F3F09 /* RandomCatGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				72E4A9AF298BCC3600B990D4 /* ViewModels */,
 				728DA4EE298B904200E989B9 /* Data */,
 				728DA4ED298B901100E989B9 /* Lotties */,
 				722C4983298A45DD003F3F09 /* Network */,
+				72E4A9AF298BCC3600B990D4 /* ViewModels */,
 				722C4986298A45E8003F3F09 /* Models */,
 				722C4987298A45EC003F3F09 /* Views */,
 				722C4985298A45E5003F3F09 /* Controllers */,
@@ -181,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				728DA4EF298B906500E989B9 /* breeds.json */,
+				7258738C2996102700DFD411 /* Empty.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
