@@ -125,6 +125,13 @@ final class BreedListController: UIViewController {
     // 특성 키워드 label
     private lazy var temperamentLabel: UILabel = { return makeLabel(isTemperament: true) }()
     
+    private let chartButtonStakView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 10
+        return sv
+    }()
+    
     /// ------------------- 차트 -------------------
     // 차트 뷰
     private let radarChartView: RadarChartView = {
@@ -184,7 +191,7 @@ final class BreedListController: UIViewController {
         setChangeBreedButton()
         setCatImageView()
         setStackView()
-        backToRandomCatButton.isHidden = true
+//        backToRandomCatButton.isHidden = true
     }
     
     // 품종변경 버튼 세팅
@@ -229,8 +236,8 @@ final class BreedListController: UIViewController {
         // catImageView
         scrollViewContainer.addSubview(catImageSlider)
         catImageSlider.snp.makeConstraints {
-            $0.height.equalTo(250)
             $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(250)
         }
     }
     
@@ -238,7 +245,8 @@ final class BreedListController: UIViewController {
     private func setStackView() {
         // 출신나라, 품종이름, 설명, 키워드 StackView
         let _ = [originLabel, breedNameLabel, descriptionLabel,
-                 averageWeightLabel, lifeSpanLabel, temperamentLabel].map { descriptionStackView.addArrangedSubview($0) }
+                 averageWeightLabel, lifeSpanLabel, temperamentLabel]
+            .map { descriptionStackView.addArrangedSubview($0) }
         
         scrollViewContainer.addSubview(descriptionStackView)
         descriptionStackView.snp.makeConstraints {
@@ -246,11 +254,18 @@ final class BreedListController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(5)
         }
         
+        let _ = [radarChartView, backToRandomCatButton]
+            .map { chartButtonStakView.addArrangedSubview($0) }
+        
+        radarChartView.snp.makeConstraints {
+            $0.height.equalTo(300)
+        }
+ 
         // radarChartView
         scrollViewContainer.addSubview(radarChartView)
         radarChartView.snp.makeConstraints {
             $0.top.equalTo(descriptionStackView.snp.bottom).offset(10)
-            $0.width.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.height.equalTo(300)
         }
         
@@ -258,8 +273,9 @@ final class BreedListController: UIViewController {
         scrollViewContainer.addSubview(backToRandomCatButton)
         backToRandomCatButton.snp.makeConstraints {
             $0.top.equalTo(radarChartView.snp.bottom).offset(10)
+//            $0.height.equalTo(60)
+            $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(40)
-            $0.height.equalTo(60)
         }
     }
     
@@ -271,6 +287,7 @@ final class BreedListController: UIViewController {
     }
     
     @objc func backToRandomCatVC() {
+        print("tapped")
         guard let viewModel = viewModel else { return }
         delegate?.recieveBreedId(breedname: viewModel.name, breedId: viewModel.breedId)
         navigationController?.popViewController(animated: true)
@@ -309,7 +326,7 @@ extension BreedListController {
         temperamentLabel.text = viewModel.temperament
         
         setChart(characteristics: viewModel.characteristics, values: viewModel.characterLevelArray)
-        backToRandomCatButton.isHidden = false
+//        backToRandomCatButton.isHidden = false
         scrollView.updateContentSize()
         scrollView.setContentOffset(CGPointZero, animated: false)
     }
